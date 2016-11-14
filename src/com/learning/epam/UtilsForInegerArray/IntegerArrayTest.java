@@ -31,7 +31,6 @@ public class IntegerArrayTest {
     public void testAddDataToArray() throws Exception {
         assertArrayEquals(addDataToArray(testArray, 1, 2), new int[]{1, 2, 3, 4, 5, 6, 1, 2});
         assertArrayEquals(addDataToArray(testArray, 0), new int[]{1, 2, 3, 4, 5, 6, 0});
-
     }
 
     @Test
@@ -42,6 +41,7 @@ public class IntegerArrayTest {
 
     @Test
     public void testFilterPredicate() throws Exception {
-        assertArrayEquals(numberEvenFilter(testArray),new int[]{2,4,6});
+        assertArrayEquals(filterWithPredicate(testArray,numberEvenFilter()),new int[]{2,4,6});
+        assertArrayEquals(filterWithPredicate(testArray,cellsEvenFilter()),new int[]{1,3,5});
     }
 }

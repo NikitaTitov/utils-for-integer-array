@@ -9,53 +9,38 @@ import java.util.Random;
 
 public class IntegerArray {
 
-
-    private static void checkInnerData(int[] array, int... arguments) {
+    private static void checkInnerArray(int[] array) {
         if (array.length == 0) {
             throw new IllegalArgumentException("Cannot use the empty array");
         }
+    }
+    private static void checkInnerArguments(int... arguments) {
         if (arguments.length == 0) {
             throw new IllegalArgumentException("Need some parameters to use");
         }
     }
 
-    private static int countNumberOfCells(int[] array, int cell) {
-        int result = array.length - cell;
-        return result;
-    }
-
     public static int[] leftCut(int[] array, int cell) {
-        checkInnerData(array, cell);
+        checkInnerArray(array);
+        checkInnerArguments(cell);
 
-        int[] result = new int[countNumberOfCells(array, cell)];
-        int indexOfCellInResultArray = 0;
-
-        for (int i = cell; i < array.length; i++) {
-            result[indexOfCellInResultArray] = array[i];
-            indexOfCellInResultArray++;
-        }
+        int[] result = new int[SupportUtils.countNumberOfCells(array, cell)];
+        SupportUtils.fillResult(array, result, cell);
         return result;
     }
 
     public static int[] rightCut(int[] array, int cell) {
-        checkInnerData(array, cell);
+        checkInnerArray(array);
+        checkInnerArguments(cell);
 
-        int[] result = new int[countNumberOfCells(array, cell)];
-
-        for (int i = 0; i < array.length - cell; i++) {
-            result[i] = array[i];
-        }
-        return result;
-    }
-
-    private static int countNumberOfCells(int[] array, int startCell, int endCell) {
-        int result = array.length - (endCell - startCell);
+        int[] result = new int[SupportUtils.countNumberOfCells(array, cell)];
+        SupportUtils.fillResult(array, result, cell);
         return result;
     }
 
     public static int[] middleCut(int[] array, int startCell, int endCell) {
-        checkInnerData(array, startCell, endCell);
-
+        checkInnerArray(array);
+        checkInnerArguments(startCell, endCell);
         if (startCell == 0 && endCell != array.length) {
             leftCut(array, endCell);
         }
@@ -66,44 +51,25 @@ public class IntegerArray {
             return new int[0];
         }
 
-        int[] result = new int[countNumberOfCells(array, startCell, endCell)];
-        int count = 0;
-
-        for (int i = 0; i < startCell; i++) {
-            result[i] = array[i];
-            count++;
-        }
-        for (int i = endCell; i < array.length; i++) {
-            result[count++] = array[i];
-        }
-        return result;
-    }
-
-    private static int countNumberOfCells(int[] array, int... arguments) {
-        int result = array.length + arguments.length;
+        int[] result = new int[SupportUtils.countNumberOfCells(array, startCell, endCell)];
+        SupportUtils.fillResult(array, result, startCell, endCell);
         return result;
     }
 
     public static int[] addDataToArray(int[] array, int... arguments) {
-        checkInnerData(array, arguments);
+        checkInnerArray(array);
+        checkInnerArguments(arguments);
 
-        int[] result = new int[countNumberOfCells(array, arguments)];
-        int count = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
-            count++;
-        }
-        for (int i = 0; i < arguments.length; i++) {
-            result[count++] = arguments[i];
-        }
+        int[] result = new int[SupportUtils.countNumberOfCells(array, arguments)];
+        SupportUtils.fillResult(array, result, arguments);
         return result;
     }
 
     public static boolean equal(int[] first, int[] second) {
+        checkInnerArray(first);
+        checkInnerArray(second);
         Arrays.sort(first);
         Arrays.sort(second);
-
         return Arrays.equals(first, second);
     }
 
@@ -126,16 +92,17 @@ public class IntegerArray {
         }
     }
 
-    private static int[] filterWithPredicate(int[] array, Predicate filter) {
+    public static int[] filterWithPredicate(int[] array, Predicate filter) {
+        checkInnerArray(array);
         return filter.filter(array);
     }
 
-    public static int[] numberEvenFilter(int[] array) {
-        return filterWithPredicate(array, new EvenNumbers());
+    static Predicate numberEvenFilter() {
+        return new EvenNumbers();
     }
 
-    public static int[] cellsEvenFilter(int[] array){
-        return filterWithPredicate(array, new EvenCells());
+    static Predicate cellsEvenFilter() {
+        return new EvenCells();
     }
 
 }

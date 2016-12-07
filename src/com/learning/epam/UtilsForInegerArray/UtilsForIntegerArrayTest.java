@@ -1,24 +1,19 @@
 package com.learning.epam.UtilsForInegerArray;
 
+import com.learning.epam.UtilsForInegerArray.Filtres.EvenNumbers;
 import org.junit.Test;
 
-import static com.learning.epam.UtilsForInegerArray.IntegerArray.*;
+import static com.learning.epam.UtilsForInegerArray.UtilsForIntegerArray.*;
 import static org.junit.Assert.*;
 
 
-public class IntegerArrayTest {
+public class UtilsForIntegerArrayTest {
     int[] testArray = {1, 2, 3, 4, 5, 6};
 
     @Test
     public void testLeftCut() throws Exception {
         assertArrayEquals(leftCut(testArray, 2), new int[]{3, 4, 5, 6});
         assertArrayEquals(leftCut(testArray, 0), new int[]{1, 2, 3, 4, 5, 6});
-    }
-
-    @Test
-    public void testRightCut() throws Exception {
-        assertArrayEquals(rightCut(testArray, 2), new int[]{1, 2, 3, 4});
-        assertArrayEquals(rightCut(testArray, 0), new int[]{1, 2, 3, 4, 5, 6});
     }
 
     @Test
@@ -35,13 +30,12 @@ public class IntegerArrayTest {
 
     @Test
     public void testEqualInUtils() throws Exception {
-        assertTrue(equal(testArray,new int[]{6,5,4,1,2,3}));
-        assertFalse(equal(testArray,new int[]{6,5,4,3,2,2}));
+        assertTrue(isAllValuesOfArraysAreEqual(testArray, new int[]{6, 5, 4, 1, 2, 3}));
+        assertFalse(isAllValuesOfArraysAreEqual(testArray, new int[]{6, 5, 4, 3, 2, 2}));
     }
 
     @Test
     public void testFilterPredicate() throws Exception {
-        assertArrayEquals(filterWithPredicate(testArray,numberEvenFilter()),new int[]{2,4,6});
-        assertArrayEquals(filterWithPredicate(testArray,cellsEvenFilter()),new int[]{1,3,5});
+        assertArrayEquals(filterWithPredicate(testArray,new EvenNumbers()),new int[]{2,4,6});
     }
 }
